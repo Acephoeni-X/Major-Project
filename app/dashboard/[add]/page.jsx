@@ -4,11 +4,13 @@ import SendEth from "@/components/SendEth";
 import getBalance from "@/utils/getBalance";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import QrCode from "@/utils/qrCode";
 
 const Dashboard = (context) => {
   const [balance, setbalance] = useState();
   const [converted, setconverted] = useState();
   const [sendEther, setSendEther] = useState(false);
+  const [genQR, setgenQR] = useState(false);
   const { add } = context.params;
   const router = useRouter();
   useEffect(() => {
@@ -41,7 +43,7 @@ const Dashboard = (context) => {
   }, [balance]);
   return (
     <div className=" flex justify-center h-screen w-screen">
-      {sendEther === false ? (
+      {sendEther === false && genQR === false ? (
         <div className=" h-full w-full max-w-screen-2xl">
           <div className=" flex flex-col lg:grid lg:grid-cols-12 w-full min-h-screen bg-white">
             {/* NAVBAR  */}
@@ -263,7 +265,7 @@ const Dashboard = (context) => {
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
                       fill="currentColor"
-                      className=" lg:mr-2 w-6 h-6 lg:w-7 lg:h-7 lg:w-5 lg:h-5"
+                      className=" lg:mr-2 w-6 h-6 lg:w-5 lg:h-5"
                     >
                       <path d="M9.25 13.25a.75.75 0 001.5 0V4.636l2.955 3.129a.75.75 0 001.09-1.03l-4.25-4.5a.75.75 0 00-1.09 0l-4.25 4.5a.75.75 0 101.09 1.03L9.25 4.636v8.614z" />
                       <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
@@ -272,12 +274,15 @@ const Dashboard = (context) => {
                       Send Eth.
                     </span>
                   </button>
-                  <button className=" lg:bg-black lg:hover:bg-gradient-to-r from-black via-black to-gray-800 text-black lg:text-white lg:px-3 lg:py-1 rounded-md flex flex-col lg:flex-row items-center">
+                  <button
+                    className=" lg:bg-black lg:hover:bg-gradient-to-r from-black via-black to-gray-800 text-black lg:text-white lg:px-3 lg:py-1 rounded-md flex flex-col lg:flex-row items-center"
+                    onClick={() => setgenQR(true)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
                       fill="currentColor"
-                      className=" lg:mr-2 w-6 h-6 lg:w-7 lg:h-7 lg:w-5 lg:h-5"
+                      className=" lg:mr-2 w-6 h-6 lg:w-5 lg:h-5"
                     >
                       <path
                         fillRule="evenodd"
@@ -442,8 +447,10 @@ const Dashboard = (context) => {
             </div>
           </div>
         </div>
-      ) : (
+      ) : sendEther === true && genQR === false ? (
         <SendEth />
+      ) : (
+        <QrCode text={add} />
       )}
     </div>
   );

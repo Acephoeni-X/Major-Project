@@ -1,0 +1,36 @@
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id       Int          @id @default(autoincrement())
+    username String
+    password String       @unique
+    email    String       @unique
+    accounts AccountID[]
+    passphr  Passphrase[]
+}
+
+model AccountID {
+    id            Int          @id @default(autoincrement())
+    account_id    String       @unique
+    user_id       Int
+    user          User         @relation(fields: [user_id], references: [id])
+    transactionid Transactions @relation(fields: [id], references: [transaction_id])
+}
+
+model Transactions {
+    transaction_id   Int         @id @default(autoincrement())
+    transact_eth     Float
+    transaction_time DateTime
+    transaction_from String
+    transaction_to   String
+    accounts         AccountID[]
+}
+
+model Passphrase {
+    passphrase_id Int    @id @default(autoincrement())
+    passphrase    String
+    user          User   @relation(fields: [passphrase_id], references: [id])
+}

@@ -10,7 +10,7 @@ const sendTransaction = async (toAddress, amount) => {
     const data = await contract.sendEther(toAddress, {
       value: ethers.utils.parseUnits(amount, "ether"),
     });
-    return data;
+    return data.hash;
   }
 };
 

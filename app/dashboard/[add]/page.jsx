@@ -333,7 +333,7 @@ const Dashboard = (context) => {
                       </div>
                       <div className=" flex justify-between items-center my-4">
                         <div className=" text-2xl font-bold">
-                          <h1>{balance} Eth.</h1>
+                          <h1>{Number(balance).toFixed(2)} Eth.</h1>
                         </div>
                         <div className=" flex text-sm">
                           <svg
@@ -353,7 +353,7 @@ const Dashboard = (context) => {
                       </div>
                       <div>
                         <div>
-                          <span>₹ {converted}/-</span>
+                          <span>₹ {Number(converted).toFixed(2)}/-</span>
                           <br />
                           <span className=" font-semibold">Current Value</span>
                         </div>

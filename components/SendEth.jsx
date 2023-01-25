@@ -1,6 +1,7 @@
 import sendTransaction from "@/utils/sendTransaction";
 import React, { useState } from "react";
-const { Network, Alchemy } = require("alchemy-sdk");
+// const { Network, Alchemy } = require("alchemy-sdk");
+import { Network, Alchemy } from "alchemy-sdk";
 
 const settings = {
   apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,

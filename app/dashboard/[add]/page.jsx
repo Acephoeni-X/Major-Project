@@ -5,6 +5,7 @@ import getBalance from "@/utils/getBalance";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import QrCode from "@/utils/qrCode";
+import Image from "next/image";
 
 const Dashboard = (context) => {
   const [balance, setbalance] = useState();
@@ -14,15 +15,19 @@ const Dashboard = (context) => {
   const { add } = context.params;
   const router = useRouter();
   useEffect(() => {
-    async function getBal() {
-      let data = await getBalance(add);
-      if (data != undefined) {
-        setbalance(await getBalance(add));
-      } else {
-        router.replace("/login");
+    if (window.ethereum.selectedAddress == null) {
+      router.push("/login");
+    } else {
+      async function getBal() {
+        let data = await getBalance(add);
+        if (data != undefined) {
+          setbalance(await getBalance(add));
+        } else {
+          router.replace("/login");
+        }
       }
+      getBal();
     }
-    getBal();
   }, []);
 
   useEffect(() => {
@@ -41,6 +46,7 @@ const Dashboard = (context) => {
       convert();
     }
   }, [balance]);
+
   return (
     <div className=" flex justify-center h-screen w-screen">
       {sendEther === false && genQR === false ? (
@@ -122,14 +128,16 @@ const Dashboard = (context) => {
               <div className=" mb-4 hidden lg:block">
                 <div className=" flex flex-col items-center bg-gray-100 py-6 px-10 rounded-2xl">
                   <div className=" w-full h-16 rounded-full overflow-hidden">
-                    <img
+                    <Image
                       className=" h-full object-cover w-full"
                       src="https://i.imgur.com/pKgABuT.jpeg"
                       alt="profile"
+                      width={200}
+                      height={200}
                     />
                   </div>
                   <div className=" mt-1 mb-4 w-fit">
-                    <h3 className=" font-semibold text-black">Rishi</h3>
+                    <h3 className=" font-semibold text-black">{add}</h3>
                   </div>
                   <div className=" bg-white px-3 py-1 rounded-lg">
                     <button className=" text-sm text-black">Profile</button>
@@ -181,11 +189,11 @@ const Dashboard = (context) => {
                     </div>
                     <div className=" my-4 w-fit">
                       <h3 className=" text-lg font-semibold text-black">
-                        Rishi
+                        {add}
                       </h3>
                     </div>
                     <div className=" bg-white px-3 py-1 rounded-lg">
-                      <button className=" text-black">Profile</button>
+                      <button className=" text-black">Log Out</button>
                     </div>
                   </div>
                 </div>

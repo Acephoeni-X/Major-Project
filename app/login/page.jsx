@@ -3,8 +3,10 @@ import getAccountAdd from "@/utils/getAccountAdd";
 import getBalance from "@/utils/getBalance";
 import React, { useEffect, useState } from "react";
 import GotoDashboard from "@/components/GotoDashboard";
+import { useRouter } from "next/navigation";
 
 const LoginScreen = () => {
+  const router = useRouter();
   const [walletAddress, setwalletAddress] = useState();
   const [balance, setbalance] = useState();
 
@@ -15,6 +17,12 @@ const LoginScreen = () => {
       setbalance(await getBalance(address));
     }
   };
+
+	useEffect(() => {
+		if(walletAddress && balance){
+			router.push(`/dashboard/${walletAddress}`);
+		}
+	}, [walletAddress, balance])
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -30,7 +38,7 @@ const LoginScreen = () => {
   return (
     <div>
       {walletAddress && balance ? (
-        <GotoDashboard address={walletAddress} balance={balance} />
+		  <></>
       ) : (
         <button
           onClick={() => {

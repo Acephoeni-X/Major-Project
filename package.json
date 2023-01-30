@@ -6,20 +6,26 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@metamask/detect-provider": "^2.0.0",
     "@next/font": "13.1.4",
+    "@prisma/client": "^4.9.0",
     "alchemy-sdk": "^2.3.0",
+    "bcrypt": "^5.1.0",
+    "cookie": "^0.5.0",
     "copy-to-clipboard": "^3.3.3",
     "dotenv": "^16.0.3",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.4",
     "ethers": "^5.7.2",
+    "express": "^4.18.2",
     "hardhat": "^2.12.6",
+    "html5-qrcode": "^2.3.4",
+    "jsonwebtoken": "^9.0.0",
     "next": "13.1.4",
-    "qr-scanner": "^1.4.2",
     "qrcode": "^1.5.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"

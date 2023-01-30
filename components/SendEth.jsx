@@ -12,9 +12,9 @@ const settings = {
 
 const SendEth = () => {
   const alchemy = new Alchemy(settings);
-  const [toAddress, settoAddress] = useState();
+  // const [toAddress, settoAddress] = useState();
   const [amount, setamount] = useState();
-  const { qrdata } = useContext(QResponse);
+  const { qrdata, setQrdata } = useContext(QResponse);
   let myRefAddr = useRef();
   useEffect(() => {
     if (qrdata) {
@@ -23,22 +23,22 @@ const SendEth = () => {
     console.log(qrdata);
   }, [qrdata]);
 
-  console.log(qrdata, myRefAddr.current);
+  console.log(qrdata, myRefAddr.current?.value);
   const handleSend = async (e) => {
     e.preventDefault();
-    let txhash = await sendTransaction(toAddress, amount);
+    let txhash = await sendTransaction(qrdata, amount);
     let data = await alchemy.core.getTransaction(txhash);
 
 
     // if()//start from here
   };
   return (
-    <div className="container px-5 py-24 mx-auto flex flex-wrap items-center bg-red-400">
+    <div className="container px-5 py-24 mx-auto flex flex-wrap justify-center items-center">
       {
-        (!qrdata) ? <QRScanner /> : <></>
+        (myRefAddr.current?.value == '' || myRefAddr.current?.value == undefined) ? <QRScanner /> : <></>
       }
-      <div className="lg:w-2/6 md:w-1/2 bg-yellow-400 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
-        <h2 className="text-white-900 text-lg font-medium title-font mb-5 underline">
+      <div className="lg:w-2/6 md:w-1/2  rounded-lg p-8 flex flex-col w-full mt-10 md:mt-0">
+        <h2 className="text-white-900 text-lg font-medium title-font mb-5">
           Send Ether
         </h2>
         <div className="relative mb-4">
@@ -55,7 +55,7 @@ const SendEth = () => {
             ref={myRefAddr}
             className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none text-black py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             onChange={(e) => {
-              settoAddress(e.target.value);
+              setQrdata(e.target.value);
             }}
           />
         </div>

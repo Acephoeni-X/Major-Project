@@ -33,7 +33,7 @@ const SendEth = () => {
     // if()//start from here
   };
   return (
-    <div className="container px-5 py-24 mx-auto flex flex-wrap justify-center items-center">
+    <div>
       {
         (myRefAddr.current?.value == '' || myRefAddr.current?.value == undefined) ? <QRScanner /> : <></>
       }

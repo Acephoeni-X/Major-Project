@@ -1,11 +1,11 @@
-import express from 'express';
+// import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { serialize } from 'cookie';
 
-const app = express();
-app.use(express.json());
+// const app = express();
+// app.use(express.json());
 
 const prisma = new PrismaClient();
 

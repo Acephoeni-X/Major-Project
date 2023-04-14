@@ -7,7 +7,7 @@ import { Html5Qrcode, Html5QrcodeScanner } from "html5-qrcode"
 const QRScanner = () => {
     const [getCode, setGetCode] = useState(null);
     let isMountedRef = useRef(false);
-    const { setQrdata } = useContext(QResponse);
+    const { setQrdata, setscanner } = useContext(QResponse);
 
 
     useEffect(() => {
@@ -27,6 +27,8 @@ const QRScanner = () => {
                     fps: 20
                 }
             );
+
+            setscanner(scanner);
 
             scanner.render(success, error);
             function success(result) {

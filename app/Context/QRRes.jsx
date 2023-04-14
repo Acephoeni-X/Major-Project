@@ -7,9 +7,10 @@ const QRRes = ({ children }) => {
     const [qrdata, setQrdata] = useState();
     const [walletEth, setWalletEth] = useState();
     const [walletAdd, setWalletAdd] = useState();
+    const [scanner, setscanner] = useState();
 
     return (
-        <QResponse.Provider value={{ qrdata, walletEth, walletAdd, setWalletAdd, setWalletEth, setQrdata }} >{children}</QResponse.Provider>
+        <QResponse.Provider value={{ qrdata, walletEth, walletAdd, scanner, setscanner, setWalletAdd, setWalletEth, setQrdata }} >{children}</QResponse.Provider>
     )
 }
 

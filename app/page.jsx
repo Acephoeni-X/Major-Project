@@ -17,7 +17,7 @@ export default function Home() {
     username: "",
     email: "",
     password: ""
-  })
+  });
 
   function createUser() {
     console.log(inputRef.current);
@@ -55,15 +55,15 @@ export default function Home() {
               <div className=' flex flex-col'>
                 <div className=' flex flex-col'>
                   <label className=' text-xs text-gray-700 font-light mb-1' htmlFor="username">Username</label>
-                  <input ref={inputRef.current.username} id='username' placeholder='Username' className=' text-black focus:border focus:border-blue-500 focus:outline focus:outline-blue-300 focus:outline-offset-2 bg-gray-100 rounded-lg outline-none px-3 py-2' name='username' type="text" />
+                  <input onChange={e => inputRef.current.username = e.target.value.trim()} id='username' placeholder='Username' className=' text-black focus:border focus:border-blue-500 focus:outline focus:outline-blue-300 focus:outline-offset-2 bg-gray-100 rounded-lg outline-none px-3 py-2' name='username' type="text" />
                 </div>
                 <div className=' flex flex-col py-5'>
                   <label className=' text-xs text-gray-700 font-light mb-1' htmlFor="email">Email</label>
-                  <input ref={inputRef.current.email} id='email' placeholder='E-mail' className=' text-black focus:border focus:border-blue-500 focus:outline focus:outline-blue-300 focus:outline-offset-2 bg-gray-100 rounded-lg outline-none px-3 py-2' name='email' type="text" />
+                  <input onChange={e => inputRef.current.email = e.target.value.trim()} id='email' placeholder='E-mail' className=' text-black focus:border focus:border-blue-500 focus:outline focus:outline-blue-300 focus:outline-offset-2 bg-gray-100 rounded-lg outline-none px-3 py-2' name='email' type="text" />
                 </div>
                 <div className=' flex flex-col'>
                   <label className=' text-xs text-gray-700 font-light mb-1' htmlFor="password">Password</label>
-                  <input ref={inputRef.current.password} id='password' placeholder='Password' className=' text-black focus:border focus:border-blue-500 focus:outline focus:outline-blue-300 focus:outline-offset-2 bg-gray-100 rounded-lg outline-none px-3 py-2' name='password' type="password" />
+                  <input onChange={e => inputRef.current.password = e.target.value.trim()} id='password' placeholder='Password' className=' text-black focus:border focus:border-blue-500 focus:outline focus:outline-blue-300 focus:outline-offset-2 bg-gray-100 rounded-lg outline-none px-3 py-2' name='password' type="password" />
                 </div>
                 <div className=' mt-2'>
                   <p className=' text-xs text-gray-700'>

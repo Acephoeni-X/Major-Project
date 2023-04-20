@@ -1,17 +1,17 @@
 import sendTransaction from "@/utils/sendTransaction";
 import React, { useContext, useEffect, useRef, useState } from "react";
 // const { Network, Alchemy } = require("alchemy-sdk");
-import { Network, Alchemy } from "alchemy-sdk";
+// import { Network, Alchemy } from "alchemy-sdk";
 import QRScanner from "./QRScanner";
 import { QResponse } from "@/app/Context/QRRes";
 
-const settings = {
-  apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
-  network: Network.ETH_GOERLI,
-};
+// const settings = {
+//   apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+//   network: Network.ETH_GOERLI,
+// };
 
 const SendEth = () => {
-  const alchemy = new Alchemy(settings);
+  // const alchemy = new Alchemy(settings);
   // const [toAddress, settoAddress] = useState();
   const [amount, setamount] = useState();
   const { qrdata, setQrdata } = useContext(QResponse);
@@ -27,16 +27,18 @@ const SendEth = () => {
   const handleSend = async (e) => {
     e.preventDefault();
     let txhash = await sendTransaction(qrdata, amount);
-    let data = await alchemy.core.getTransaction(txhash);
-
+    // let data = await alchemy.core.getTransaction(txhash);
 
     // if()//start from here
   };
   return (
     <div>
-      {
-        (myRefAddr.current?.value == '' || myRefAddr.current?.value == undefined) ? <QRScanner /> : <></>
-      }
+      {myRefAddr.current?.value == "" ||
+      myRefAddr.current?.value == undefined ? (
+        <QRScanner />
+      ) : (
+        <></>
+      )}
       <div className="lg:w-2/6 md:w-1/2  rounded-lg p-8 flex flex-col w-full mt-10 md:mt-0">
         <h2 className="text-white-900 text-lg font-medium title-font mb-5">
           Send Ether

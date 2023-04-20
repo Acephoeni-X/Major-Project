@@ -13,7 +13,6 @@
     "@metamask/detect-provider": "^2.0.0",
     "@next/font": "13.1.4",
     "@prisma/client": "^4.9.0",
-    "alchemy-sdk": "^2.3.0",
     "bcrypt": "^5.1.0",
     "cookie": "^0.5.0",
     "copy-to-clipboard": "^3.3.3",

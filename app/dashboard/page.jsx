@@ -14,18 +14,17 @@ const Dashboard = (context) => {
   const [sendEther, setSendEther] = useState(false);
   const [genQR, setgenQR] = useState(false);
   // const { add } = context.params;
-  const { walletAdd, setWalletEth, setWalletAdd, scanner } = useContext(QResponse);
+  const { walletAdd, setWalletEth, setWalletAdd, scanner } =
+    useContext(QResponse);
   const router = useRouter();
 
   useEffect(() => {
     // setWalletAdd(walletAdd);
     // console.log(walletAdd);
     if (walletAdd == null) {
-
       if (window.ethereum.selectedAddress == null) {
         router.push("/login");
-      }
-      else {
+      } else {
         setWalletAdd(window.ethereum.selectedAddress);
         (async () => {
           setbalance(await getBalance(window.ethereum.selectedAddress));
@@ -55,7 +54,8 @@ const Dashboard = (context) => {
             }
           )
         ).json();
-        setWalletEth(data.price); ``
+        setWalletEth(data.price);
+        ``;
         setconverted(data.price);
       }
       convert();
@@ -68,7 +68,6 @@ const Dashboard = (context) => {
     setgenQR(false);
     scanner.clear();
   }
-
 
   return (
     <div className=" flex justify-center h-screen w-screen">
@@ -320,9 +319,7 @@ const Dashboard = (context) => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <span className=" text-sm lg:text-base mt-1 lg:mt-0">
-                    QR
-                  </span>
+                  <span className=" text-sm lg:text-base mt-1 lg:mt-0">QR</span>
                 </button>
               </div>
             </div>
@@ -398,7 +395,10 @@ const Dashboard = (context) => {
                   <h2 className=" text-lg lg:text-2xl font-bold">
                     Transactions
                   </h2>
-                  <button className=" text-sm flex flex-row items-center ">
+                  <button
+                    className=" text-sm flex flex-row items-center "
+                    onClick={() => router.push(`dashboard/history`)}
+                  >
                     <span>View all</span>
                     <span>
                       <svg
@@ -478,21 +478,26 @@ const Dashboard = (context) => {
         </div>
       </div>
 
-      {
-        (sendEther) ?
-          <div className=" bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center" onClick={(event) => shut(event)}>
-            <SendEth />
-          </div> :
-          <></>
-      }
-      {
-        (genQR) ?
-          <div className="  bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center" onClick={(event) => shut(event)}>
-            <QrCode text={walletAdd} />
-          </div> :
-          <></>
-      }
-
+      {sendEther ? (
+        <div
+          className=" bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center"
+          onClick={(event) => shut(event)}
+        >
+          <SendEth />
+        </div>
+      ) : (
+        <></>
+      )}
+      {genQR ? (
+        <div
+          className="  bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center"
+          onClick={(event) => shut(event)}
+        >
+          <QrCode text={walletAdd} />
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

@@ -1,50 +1,72 @@
 "use client";
-import Homesvg from "@/components/Icons/Homesvg";
-import SendEth from "@/components/SendEth";
+import TransactionIcon from "@/app/dashboard/TransactionIcon";
+import SendEth from "@/app/dashboard/SendEth";
 import getBalance from "@/utils/getBalance";
 import { useRouter } from "next/navigation";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import QrCode from "@/utils/qrCode";
 import Image from "next/image";
 import { QResponse } from "../Context/QRRes";
+import truncateText from "@/utils/truncateText";
 
 const Dashboard = (context) => {
   const [balance, setbalance] = useState();
   const [converted, setconverted] = useState();
   const [sendEther, setSendEther] = useState(false);
   const [genQR, setgenQR] = useState(false);
-  // const { add } = context.params;
+  const [miniTransaction, setminiTransaction] = useState();
+
   const { walletAdd, setWalletEth, setWalletAdd, scanner } =
     useContext(QResponse);
   const router = useRouter();
 
+  const renderOnce = useRef(true);
+  const renderTwo = useRef(true);
+
   useEffect(() => {
-    // setWalletAdd(walletAdd);
-    // console.log(walletAdd);
-    if (walletAdd == null) {
-      if (window.ethereum.selectedAddress == null) {
-        router.push("/login");
-      } else {
-        setWalletAdd(window.ethereum.selectedAddress);
-        (async () => {
-          setbalance(await getBalance(window.ethereum.selectedAddress));
-        })();
-      }
-    } else {
-      async function getBal() {
-        let data = await getBalance(walletAdd);
-        if (data != undefined) {
-          setbalance(await getBalance(walletAdd));
+    if (renderOnce.current) {
+      renderOnce.current = false;
+
+      if (walletAdd == null) {
+        if (window.ethereum.selectedAddress == null) {
+          router.push("/login");
         } else {
-          router.replace("/login");
+          setWalletAdd(window.ethereum.selectedAddress);
+          (async () => {
+            setbalance(await getBalance(window.ethereum.selectedAddress));
+          })();
+          fetch(
+            `http://localhost:3000/api/getTransHistory`,
+            {
+              method: "POST",
+              body: JSON.stringify({
+                address: window.ethereum.selectedAddress,
+              }),
+            },
+            { next: { revalidate: 20 } }
+          )
+            .then((res) => res.json())
+            .then((res) => {
+              setminiTransaction(res);
+            });
         }
+      } else {
+        async function getBal() {
+          let data = await getBalance(walletAdd);
+          if (data != undefined) {
+            setbalance(await getBalance(walletAdd));
+          } else {
+            router.replace("/login");
+          }
+        }
+        getBal();
       }
-      getBal();
     }
   }, []);
 
   useEffect(() => {
-    if (balance != undefined) {
+    if (renderTwo.current || balance != undefined) {
+      renderTwo.current = false;
       async function convert() {
         let data = await (
           await fetch(
@@ -55,7 +77,6 @@ const Dashboard = (context) => {
           )
         ).json();
         setWalletEth(data.price);
-        ``;
         setconverted(data.price);
       }
       convert();
@@ -158,7 +179,9 @@ const Dashboard = (context) => {
                   />
                 </div>
                 <div className=" mt-1 mb-4 w-fit">
-                  <h3 className=" font-semibold text-black">{walletAdd}</h3>
+                  <p className=" font-semibold text-black text-ellipsis">
+                    {truncateText(walletAdd, 10)}
+                  </p>
                 </div>
                 <div className=" bg-white px-3 py-1 rounded-lg">
                   <button className=" text-sm text-black">Profile</button>
@@ -418,58 +441,23 @@ const Dashboard = (context) => {
                 </div>
                 <div className=" ">
                   <div className=" rounded-md overflow-hidden my-8">
-                    <div>
-                      <div className=" flex items-center ">
-                        <div className=" bg-black flex justify-center items-center p-3 rounded-md">
-                          <Homesvg />
+                    {miniTransaction &&
+                      miniTransaction.data.slice(0, 5).map((e, index) => (
+                        <div className=" flex items-center " key={index}>
+                          <div className=" bg-black flex justify-center items-center p-3 rounded-md">
+                            <TransactionIcon />
+                          </div>
+                          <div className=" h-full w-full flex flex-col justify-between text-black px-4 py-1">
+                            <span className=" text-xs font-light">
+                              {e.timestamp}
+                            </span>
+                            <br />
+                            <span className=" lg:mt-1 text-sm font-bold">
+                              {e.value}
+                            </span>
+                          </div>
                         </div>
-                        <div className=" h-full w-full flex flex-col justify-between text-black px-4 py-1">
-                          <span className=" text-xs font-light">
-                            12:34, 01 Jan 2023
-                          </span>
-                          <br />
-                          <span className=" lg:mt-1 text-sm font-bold">
-                            0.005 Eth.
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className=" rounded-md overflow-hidden my-8">
-                    <div>
-                      <div className=" flex items-center ">
-                        <div className=" bg-black flex justify-center items-center p-3 rounded-md">
-                          <Homesvg />
-                        </div>
-                        <div className=" h-full w-full flex flex-col justify-between text-black px-4 py-1">
-                          <span className=" text-xs font-light">
-                            12:34, 01 Jan 2023
-                          </span>
-                          <br />
-                          <span className=" lg:mt-1 text-sm font-bold">
-                            0.005 Eth.
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className=" rounded-md overflow-hidden my-8">
-                    <div>
-                      <div className=" flex items-center ">
-                        <div className=" bg-black flex justify-center items-center p-3 rounded-md">
-                          <Homesvg />
-                        </div>
-                        <div className=" h-full w-full flex flex-col justify-between text-black px-4 py-1">
-                          <span className=" text-xs font-light">
-                            12:34, 01 Jan 2023
-                          </span>
-                          <br />
-                          <span className=" lg:mt-1 text-sm font-bold">
-                            0.005 Eth.
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                      ))}
                   </div>
                 </div>
               </div>

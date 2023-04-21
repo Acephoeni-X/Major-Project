@@ -2,7 +2,6 @@
 import getAccountAdd from "@/utils/getAccountAdd";
 import getBalance from "@/utils/getBalance";
 import React, { useContext, useEffect, useState } from "react";
-import GotoDashboard from "@/components/GotoDashboard";
 import { useRouter } from "next/navigation";
 import { QResponse } from "./Context/QRRes";
 
@@ -17,7 +16,6 @@ const LoginScreen = () => {
     if (window.ethereum != undefined) {
       let address = await getAccountAdd();
       setwalletAddress(address);
-
       setbalance(await getBalance(address));
     }
   };

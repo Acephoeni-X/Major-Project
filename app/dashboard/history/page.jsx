@@ -1,33 +1,37 @@
 "use client";
-// import { ethers } from "ethers";
-import { useState, useEffect, useRef } from "react";
+import { QResponse } from "../../Context/QRRes";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
-const history = () => {
-  const [transition, setTransition] = useState();
+const page = () => {
+  const render = useRef(true);
+  const { walletAdd } = useContext(QResponse);
+  const [transaction, settransaction] = useState();
   const transDate = (timeStamp) => {
     console.log(new Date(Number(timeStamp)).getDate());
     return new Date(Number(timeStamp)).getDate();
   };
-  const onlyOnce = useRef(true);
   useEffect(() => {
-    if (onlyOnce.current) {
-      onlyOnce.current = false;
-      async function getHistory() {
-        await fetch(`http://localhost:3000/api/getTransHistory`, {
-          method: "POST",
-          body: JSON.stringify({ address: window.ethereum.selectedAddress }),
-        })
-          .then((res) => res.json())
-          .then((res) => {
-            console.log(res);
-            setTransition(res);
-          });
-        // setTransition(data);
-        // console.log(data);
+    if (render.current) {
+      render.current = false;
+      async function getTransaction() {
+        const trans = await (
+          await fetch(`http://localhost:3000/api/getTransHistory`, {
+            method: "POST",
+            body: JSON.stringify({
+              address: walletAdd,
+            }),
+          })
+        ).json();
+        settransaction(trans);
       }
-      getHistory();
+      getTransaction();
     }
   }, []);
+
+  useEffect(() => {
+    console.log(transaction);
+  }, [transaction]);
+
   return (
     <div>
       <table className=" border-[1px] w-full text-left">
@@ -47,7 +51,7 @@ const history = () => {
               Timestemp
             </th>
           </tr>
-          {transition?.data.map((el, index) => {
+          {transaction?.data.map((el, index) => {
             return (
               <tr
                 key={index}
@@ -70,4 +74,5 @@ const history = () => {
     </div>
   );
 };
-export default history;
+
+export default page;

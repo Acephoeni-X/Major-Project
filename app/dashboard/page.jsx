@@ -19,7 +19,6 @@ const Dashboard = (context) => {
   const { walletAdd, setWalletEth, setWalletAdd, scanner } =
     useContext(QResponse);
   const router = useRouter();
-
   const renderOnce = useRef(true);
   const renderTwo = useRef(true);
 

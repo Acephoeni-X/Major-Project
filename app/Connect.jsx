@@ -24,9 +24,7 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (walletAddress && balance) {
-      console.log(typeof walletAddress);
       setWalletAdd(`${walletAddress}`);
-      // console.log(walletAdd);
       router.push(`/dashboard/`);
     }
   }, [walletAddress, balance]);
@@ -47,7 +45,11 @@ const LoginScreen = () => {
   return (
     <div>
       {walletAddress && balance ? (
-        <></>
+        <>
+          <button className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+            Redirecting...
+          </button>
+        </>
       ) : (
         <button
           className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
@@ -55,7 +57,7 @@ const LoginScreen = () => {
             handleConnectWallet();
           }}
         >
-          Connect MetaMasks
+          {"Connect Metamask"}
         </button>
       )}
     </div>

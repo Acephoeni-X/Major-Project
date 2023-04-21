@@ -1,6 +1,6 @@
 "use client";
 // import { ethers } from "ethers";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const history = () => {
   const [transition, setTransition] = useState();
@@ -8,21 +8,25 @@ const history = () => {
     console.log(new Date(Number(timeStamp)).getDate());
     return new Date(Number(timeStamp)).getDate();
   };
+  const onlyOnce = useRef(true);
   useEffect(() => {
-    async function getHistory() {
-      await fetch(`http://localhost:3000/api/getTransHistory`, {
-        method: "POST",
-        body: JSON.stringify({ address: window.ethereum.selectedAddress }),
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res);
-          setTransition(res);
-        });
-      // setTransition(data);
-      // console.log(data);
+    if (onlyOnce.current) {
+      onlyOnce.current = false;
+      async function getHistory() {
+        await fetch(`http://localhost:3000/api/getTransHistory`, {
+          method: "POST",
+          body: JSON.stringify({ address: window.ethereum.selectedAddress }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            setTransition(res);
+          });
+        // setTransition(data);
+        // console.log(data);
+      }
+      getHistory();
     }
-    getHistory();
   }, []);
   return (
     <div>

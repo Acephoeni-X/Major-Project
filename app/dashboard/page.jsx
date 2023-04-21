@@ -29,7 +29,7 @@ const Dashboard = (context) => {
 
       if (walletAdd == null) {
         if (window.ethereum.selectedAddress == null) {
-          router.push("/login");
+          router.push("/");
         } else {
           setWalletAdd(window.ethereum.selectedAddress);
           (async () => {

@@ -29,6 +29,7 @@ const Dashboard = (context) => {
         setWalletAdd(window.ethereum.selectedAddress);
         (async () => {
           setbalance(await getBalance(window.ethereum.selectedAddress));
+          console.log("getbalance",await getBalance(window.ethereum.selectedAddress));
         })();
       }
     } else {
@@ -73,11 +74,11 @@ const Dashboard = (context) => {
   return (
     <div className=" flex justify-center h-screen w-screen">
       <div className=" h-full w-full max-w-screen-2xl">
-        <div className=" flex flex-col lg:grid lg:grid-cols-12 w-full min-h-screen bg-white">
+        <div className=" flex flex-col lg:grid lg:grid-cols-12 w-full min-h-screen bg-black">
           {/* NAVBAR  */}
-          <div className=" sticky top-0 bg-white lg:static px-4 py-2 col-span-2 lg:border-r border-b border-gray-300 flex lg:flex-col justify-between lg:items-center">
+          <div className=" sticky top-0 bg-black lg:static px-4 py-2 col-span-2 lg:border-r border-b lg:border-b-0 border-gray-100 flex lg:flex-col justify-between lg:items-center">
             {/* Wallet Name */}
-            <div className=" text-black lg:mt-4 font-bold text-3xl">
+            <div className=" text-white lg:mt-4 font-bold text-3xl">
               <h1 className=" hidden lg:block">
                 Crypto <br />
                 Trend
@@ -87,7 +88,7 @@ const Dashboard = (context) => {
 
             {/* Option Hidden for small i.e < lg */}
             <div>
-              <div className=" text-black hidden  lg:grid lg:gap-4">
+              <div className=" text-white hidden  lg:grid lg:gap-4">
                 <div className=" flex flex-row items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +149,7 @@ const Dashboard = (context) => {
 
             {/* Hidden Profile Card < lg */}
             <div className=" mb-4 hidden lg:block">
-              <div className=" flex flex-col items-center bg-gray-100 py-6 px-10 rounded-2xl">
+              <div className=" flex flex-col items-center bg-gray-900 shadow-2xl shadow-purple-600 py-6 px-10 rounded-2xl">
                 <div className=" w-full h-16 rounded-full overflow-hidden">
                   <Image
                     className=" h-full object-cover w-full"
@@ -159,10 +160,10 @@ const Dashboard = (context) => {
                   />
                 </div>
                 <div className=" mt-1 mb-4 w-fit">
-                  <h3 className=" font-semibold text-black">{walletAdd}</h3>
+                  <h3 className=" font-semibold text-white">{walletAdd?.slice(0,5)+'...'+walletAdd?.slice(walletAdd?.length-4,walletAdd?.length)}</h3>
                 </div>
-                <div className=" bg-white px-3 py-1 rounded-lg">
-                  <button className=" text-sm text-black">Profile</button>
+                <div className=" bg-black px-3 py-1 rounded-lg">
+                  <button className=" text-sm text-white">Profile</button>
                 </div>
               </div>
             </div>
@@ -173,7 +174,7 @@ const Dashboard = (context) => {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
-                className=" h-9 w-9 text-black"
+                className=" h-9 w-9 text-white"
               >
                 <path
                   fillRule="evenodd"
@@ -185,8 +186,8 @@ const Dashboard = (context) => {
           </div>
 
           {/* Slide Navbar Hidden for lg >= */}
-          <div className=" lg:hidden w-screen z-0 h-screen fixed top-0 bottom-0 left-0 right-0 backdrop-blur bg-white/30 lg:backdrop-blur-0 lg:bg-white/0">
-            <div className=" flex flex-col z-10 absolute top-0 right-0 bottom-0 w-3/4 bg-white">
+          <div className=" lg:hidden w-screen z-0 h-screen fixed top-0 bottom-0 left-0 right-0 backdrop-blur bg-black/30 lg:backdrop-blur-0 lg:bg-black/0">
+            <div className=" flex flex-col z-10 absolute top-0 right-0 bottom-0 w-3/4 bg-black">
               <div>
                 <div className=" py-3 px-6">
                   <svg
@@ -201,7 +202,7 @@ const Dashboard = (context) => {
               </div>
 
               <div className="w-full flex justify-center items-center mt-10">
-                <div className=" w-64 flex flex-col items-center bg-gray-100 py-6 px-1 rounded-2xl">
+                <div className=" w-64 flex flex-col items-center bg-gray-900 shadow-2xl shadow-purple-600 py-6 px-1 rounded-2xl">
                   <div className=" w-32 h-32 rounded-full overflow-hidden">
                     <img
                       className=" h-full object-cover w-full"
@@ -210,17 +211,17 @@ const Dashboard = (context) => {
                     />
                   </div>
                   <div className=" my-4 w-fit">
-                    <h3 className=" text-lg font-semibold text-black">
-                      {walletAdd}
+                    <h3 className=" text-lg font-semibold text-white">
+                      {walletAdd?.slice(0,5)+'...'+walletAdd?.slice(walletAdd?.length-4,walletAdd?.length)}
                     </h3>
                   </div>
-                  <div className=" bg-white px-3 py-1 rounded-lg">
-                    <button className=" text-black">Log Out</button>
+                  <div className=" bg-black px-3 py-1 rounded-lg">
+                    <button className=" text-white">Log Out</button>
                   </div>
                 </div>
               </div>
 
-              <div className=" mt-10 mb-20 grid gap-4 px-6 text-black">
+              <div className=" mt-10 mb-20 grid gap-4 px-6 text-white">
                 <div className=" flex flex-row items-center border border-black rounded p-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -282,13 +283,13 @@ const Dashboard = (context) => {
 
           {/* Dashboard */}
           <div className=" col-span-7 grid lg:grid-rows-5">
-            <div className=" lg:row-span-1 flex flex-col justify-between py-8 lg:py-6 px-4 lg:px-8 border-b border-gray-300 ">
-              <div className=" text-black text-lg lg:text-2xl font-bold lg:mb-0 mb-8">
+            <div className=" lg:row-span-1 flex flex-col justify-between py-8 lg:py-6 px-4 lg:px-8 border-b border-gray-100 ">
+              <div className=" text-white text-lg lg:text-2xl font-bold lg:mb-0 mb-8">
                 <h2>Dashboards</h2>
               </div>
               <div className=" w-full flex justify-between lg:justify-start">
                 <button
-                  className=" lg:bg-black lg:hover:bg-gradient-to-r from-black via-black to-gray-800 text-black lg:text-white lg:px-3 lg:py-1 rounded-md lg:mx-16 flex flex-col lg:flex-row items-center"
+                  className=" lg:bg-black lg:hover:bg-gradient-to-r from-black via-black to-gray-800 text-white lg:text-white lg:px-3 lg:py-1 rounded-md lg:mr-16 flex flex-col lg:flex-row items-center"
                   onClick={() => setSendEther(true)}
                 >
                   <svg
@@ -305,7 +306,7 @@ const Dashboard = (context) => {
                   </span>
                 </button>
                 <button
-                  className=" lg:bg-black lg:hover:bg-gradient-to-r from-black via-black to-gray-800 text-black lg:text-white lg:px-3 lg:py-1 rounded-md flex flex-col lg:flex-row items-center"
+                  className=" lg:bg-black lg:hover:bg-gradient-to-r from-black via-black to-gray-800 text-white lg:text-white lg:px-3 lg:py-1 rounded-md flex flex-col lg:flex-row items-center"
                   onClick={() => setgenQR(true)}
                 >
                   <svg
@@ -330,7 +331,7 @@ const Dashboard = (context) => {
             {/* Prediction and Char Hidden for small */}
             <div className=" hidden lg:row-span-4 lg:flex flex-col justify-between py-6 px-8">
               <div>
-                <div className=" text-black text-2xl font-semibold">
+                <div className=" text-white text-2xl font-semibold">
                   <h2>Prediction</h2>
                 </div>
                 <div>CharrrrtJSS</div>
@@ -341,7 +342,7 @@ const Dashboard = (context) => {
           {/* Predictions Chart */}
           <div className=" lg:hidden order-last flex flex-col justify-between py-2 px-4 lg:py-6 lg:px-8">
             <div>
-              <div className=" text-black text-2xl font-semibold">
+              <div className=" text-white text-2xl font-semibold">
                 <h2>Prediction</h2>
               </div>
               <div>CharrrrtJSS</div>
@@ -349,14 +350,14 @@ const Dashboard = (context) => {
           </div>
 
           {/* Summary and transactions */}
-          <div className=" border-l border-gray-300 col-span-3 py-8 px-4 lg:py-6 lg:px-8">
+          <div className=" border-l border-gray-100 col-span-3 py-8 px-4 lg:py-6 lg:px-8">
             <div className="grid gap-8">
               {/* Summary Card */}
               <div className=" flex flex-col justify-center">
-                <div className="text-black text-lg lg:text-2xl font-bold">
+                <div className="text-white text-lg lg:text-2xl font-bold">
                   <h2>Summary</h2>
                 </div>
-                <div className=" text-black border border-black bg-white rounded-md p-5 mt-8">
+                <div className=" text-white border border-black bg-black shadow-2xl shadow-blue-600 rounded-md p-5 mt-8">
                   <div>
                     <div className="">
                       <span>Your Wallet</span>
@@ -394,7 +395,7 @@ const Dashboard = (context) => {
 
               {/* Some Transactions */}
               <div className=" ">
-                <div className="text-black flex justify-between items-center border-b border-gray-300 py-2">
+                <div className="text-white flex justify-between items-center border-b border-gray-100 py-2">
                   <h2 className=" text-lg lg:text-2xl font-bold">
                     Transactions
                   </h2>
@@ -423,7 +424,7 @@ const Dashboard = (context) => {
                         <div className=" bg-black flex justify-center items-center p-3 rounded-md">
                           <Homesvg />
                         </div>
-                        <div className=" h-full w-full flex flex-col justify-between text-black px-4 py-1">
+                        <div className=" h-full w-full flex flex-col justify-between text-white px-4 py-1">
                           <span className=" text-xs font-light">
                             12:34, 01 Jan 2023
                           </span>
@@ -441,7 +442,7 @@ const Dashboard = (context) => {
                         <div className=" bg-black flex justify-center items-center p-3 rounded-md">
                           <Homesvg />
                         </div>
-                        <div className=" h-full w-full flex flex-col justify-between text-black px-4 py-1">
+                        <div className=" h-full w-full flex flex-col justify-between text-white px-4 py-1">
                           <span className=" text-xs font-light">
                             12:34, 01 Jan 2023
                           </span>
@@ -459,7 +460,7 @@ const Dashboard = (context) => {
                         <div className=" bg-black flex justify-center items-center p-3 rounded-md">
                           <Homesvg />
                         </div>
-                        <div className=" h-full w-full flex flex-col justify-between text-black px-4 py-1">
+                        <div className=" h-full w-full flex flex-col justify-between text-white px-4 py-1">
                           <span className=" text-xs font-light">
                             12:34, 01 Jan 2023
                           </span>
@@ -480,7 +481,7 @@ const Dashboard = (context) => {
 
       {
         (sendEther) ?
-          <div className=" bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center" onClick={(event) => shut(event)}>
+          <div className=" bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center" onClick={(event) => shut(event.currentTarget)}>
             <SendEth />
           </div> :
           <></>
@@ -488,7 +489,7 @@ const Dashboard = (context) => {
       {
         (genQR) ?
           <div className="  bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center" onClick={(event) => shut(event)}>
-            <QrCode text={walletAdd} />
+            <QrCode text={walletAdd?.slice(0,5)+'...'+walletAdd?.slice(walletAdd?.length-4,walletAdd?.length)} />
           </div> :
           <></>
       }

@@ -1,0 +1,7 @@
+numpy
+pandas
+scikit-learn
+statsmodels
+# tensorflow==2.7.0
+matplotlib
+keras

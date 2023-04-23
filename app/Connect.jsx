@@ -21,7 +21,7 @@ const LoginScreen = () => {
   };
 
   useEffect(() => {
-    if (walletAddress && balance) {
+    if (walletAddress) {
       setWalletAdd(`${walletAddress}`);
       router.push(`/dashboard/`);
     }

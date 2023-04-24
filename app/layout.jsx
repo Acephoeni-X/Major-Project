@@ -1,6 +1,7 @@
 'use client'
 import './globals.css'
 import QRRes from './Context/QRRes'
+import Navbar from './Navbar'
 
 export default function RootLayout({ children }) {
   return (

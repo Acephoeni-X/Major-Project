@@ -4,8 +4,9 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from datetime import datetime, timedelta
 from flask import Flask, jsonify, request
-
+from flask_cors import CORS, cross_origin
 predictions = []
+
 
 
 class Prediction():
@@ -48,6 +49,8 @@ def add_upcoming_dates():
 
 app = Flask(__name__)
 
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/predict', methods=['GET'])
 def home():

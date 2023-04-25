@@ -23,17 +23,17 @@ const QrCode = ({ text }) => {
   }, []);
 
   return (
-    <div>
+    <div className=" flex flex-col items-center bg-blue-400">
       <Image
         src={imgSrc}
         alt="Qr Code of below address"
         width={300}
         height={300}
       />
-      <div>
-        <h1>{text}</h1>
+      <div className=" flex rounded-md overflow-hidden mt-4">
+        <h1 className=" bg-blue-800 text-white p-2">{text}</h1>
 
-        <button onClick={() => copy(text)}>
+        <button className="p-2 bg-blue-500 text-white" onClick={() => copy(text)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

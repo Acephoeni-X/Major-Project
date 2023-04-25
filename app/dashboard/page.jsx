@@ -82,8 +82,7 @@ const Dashboard = (context) => {
     }
   }, [balance]);
 
-  function shut(event) {
-    event.stopPropagation();
+  function shut() {
     setSendEther(false);
     setgenQR(false);
     scanner.clear();
@@ -352,15 +351,19 @@ const Dashboard = (context) => {
 
       {
         (sendEther) ?
-          <div className=" bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center" onClick={(event) => shut(event.currentTarget)}>
-            <SendEth />
+          <div className=" bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center" onClick={() => shut()}>
+            <div className="shadow-2xl shadow-blue-700" onClick={(event) => event.stopPropagation()}>
+              <SendEth />
+            </div>
           </div> :
           <></>
       }
       {
         (genQR) ?
-          <div className="  bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center" onClick={(event) => shut(event)}>
-            <QrCode text={walletAdd?.slice(0,5)+'...'+walletAdd?.slice(walletAdd?.length-4,walletAdd?.length)} />
+          <div className="  bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center" onClick={() => shut()}>
+            <div onClick={(event) => event.stopPropagation()}>
+              <QrCode text={walletAdd} />
+            </div>
           </div> :
           <></>
       }

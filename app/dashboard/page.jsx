@@ -8,6 +8,7 @@ import QrCode from "@/utils/qrCode";
 import Image from "next/image";
 import { QResponse } from "../Context/QRRes";
 import truncateText from "@/utils/truncateText";
+import Chart from "./Chart";
 
 const Dashboard = (context) => {
   const [balance, setbalance] = useState();
@@ -34,16 +35,12 @@ const Dashboard = (context) => {
           (async () => {
             setbalance(await getBalance(window.ethereum.selectedAddress));
           })();
-          fetch(
-            `http://localhost:3000/api/getTransHistory`,
-            {
-              method: "POST",
-              body: JSON.stringify({
-                address: window.ethereum.selectedAddress,
-              }),
-            },
-            { next: { revalidate: 20 } }
-          )
+          fetch(`http://localhost:3000/api/getTransHistory`, {
+            method: "POST",
+            body: JSON.stringify({
+              address: window.ethereum.selectedAddress,
+            }),
+          })
             .then((res) => res.json())
             .then((res) => {
               setminiTransaction(res);
@@ -176,7 +173,14 @@ const Dashboard = (context) => {
                   />
                 </div>
                 <div className=" mt-1 mb-4 w-fit">
-                  <h3 className=" font-semibold text-white">{walletAdd?.slice(0,5)+'...'+walletAdd?.slice(walletAdd?.length-4,walletAdd?.length)}</h3>
+                  <h3 className=" font-semibold text-white">
+                    {walletAdd?.slice(0, 5) +
+                      "..." +
+                      walletAdd?.slice(
+                        walletAdd?.length - 4,
+                        walletAdd?.length
+                      )}
+                  </h3>
                 </div>
                 <div className=" bg-black px-3 py-1 rounded-lg">
                   <button className=" text-sm text-white">Profile</button>
@@ -225,18 +229,22 @@ const Dashboard = (context) => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <span className=" text-xs font-light lg:text-base mt-1 lg:mt-0">QR</span>
+                  <span className=" text-xs font-light lg:text-base mt-1 lg:mt-0">
+                    QR
+                  </span>
                 </button>
               </div>
             </div>
 
             {/* Prediction and Char Hidden for small */}
-            <div className=" hidden lg:row-span-4 lg:flex flex-col justify-between py-6 px-8">
+            <div className=" hidden lg:row-span-4 lg:flex flex-col justify-between py-6 px-8 flex-wrap m-2">
               <div>
-                <div className=" text-white text-2xl font-semibold">
+                <div className=" text-white text-2xl font-semibold m-4">
                   <h2>Prediction</h2>
                 </div>
-                <div>CharrrrtJSS</div>
+                <div className="mt-8">
+                  <Chart />
+                </div>
               </div>
             </div>
           </div>
@@ -326,7 +334,10 @@ const Dashboard = (context) => {
                   <div className=" rounded-md overflow-hidden my-8 p-4">
                     {miniTransaction &&
                       miniTransaction.data.slice(0, 5).map((e, index) => (
-                        <div className=" flex items-center mb-3 border border-blue-300 rounded-md shadow-md shadow-blue-500" key={index}>
+                        <div
+                          className=" flex items-center mb-3 border border-blue-300 rounded-md shadow-md shadow-blue-500"
+                          key={index}
+                        >
                           <div className=" bg-black flex justify-center items-center p-3 rounded-md">
                             <TransactionIcon />
                           </div>
@@ -349,25 +360,33 @@ const Dashboard = (context) => {
         </div>
       </div>
 
-      {
-        (sendEther) ?
-          <div className=" bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center" onClick={() => shut()}>
-            <div className="shadow-2xl shadow-blue-700" onClick={(event) => event.stopPropagation()}>
-              <SendEth />
-            </div>
-          </div> :
-          <></>
-      }
-      {
-        (genQR) ?
-          <div className="  bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center" onClick={() => shut()}>
-            <div onClick={(event) => event.stopPropagation()}>
-              <QrCode text={walletAdd} />
-            </div>
-          </div> :
-          <></>
-      }
-
+      {sendEther ? (
+        <div
+          className=" bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center"
+          onClick={() => shut()}
+        >
+          <div
+            className="shadow-2xl shadow-blue-700"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <SendEth />
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
+      {genQR ? (
+        <div
+          className="  bg-black fixed top-0 left-0 right-0 bottom-0 px-5 py-24 mx-auto flex flex-wrap justify-center items-center"
+          onClick={() => shut()}
+        >
+          <div onClick={(event) => event.stopPropagation()}>
+            <QrCode text={walletAdd} />
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

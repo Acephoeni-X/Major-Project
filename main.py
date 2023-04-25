@@ -60,9 +60,7 @@ if __name__ == '__main__':
     p.predict()
     pred = p.day14predictions()
     pred.reverse()
-    # print(predictions)
     dates = add_upcoming_dates()
-    # print(dates)
     for idx, i in enumerate(pred):
         predictions.append({'date': dates[idx], 'price': i})
-    app.run(debug=True)
+    app.run(debug=True, port='8080')

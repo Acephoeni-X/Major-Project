@@ -3,6 +3,7 @@ import { Inter } from "@next/font/google";
 import styles from "./page.module.css";
 import Team from "@/app/Team";
 import Navbar from "./Navbar";
+import Footer from "./footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,22 +45,25 @@ export default function Home() {
         </section>
       </main>
       <span className="flex flex-wrap">
-        <button class="flex mx-auto my-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+        <button className="flex mx-auto my-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
           <a href="/assets/pdfs/" download={true}>
             Download Report (*.pdf)
           </a>
         </button>
-        <button class="flex mx-auto my-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+        <button className="flex mx-auto my-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
           Download Report (*.zip)
         </button>
-        <button class="flex mx-auto my-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+        <button className="flex mx-auto my-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
           Download Research Paper (*.pdf)
         </button>
-        <button class="flex mx-auto my-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+        <button className="flex mx-auto my-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
           Download PPT(*.ppt)
         </button>
       </span>
       <Team />
+      <span className="mt-8">
+        <Footer />
+      </span>
     </>
   );
 }

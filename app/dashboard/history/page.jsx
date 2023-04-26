@@ -1,7 +1,7 @@
 "use client";
 import { QResponse } from "../../Context/QRRes";
 import React, { useContext, useEffect, useRef, useState } from "react";
-
+import { ethers } from "ethers";
 const page = () => {
   const render = useRef(true);
   const { walletAdd } = useContext(QResponse);
@@ -10,6 +10,16 @@ const page = () => {
     console.log(new Date(Number(timeStamp)).getDate());
     return new Date(Number(timeStamp)).getDate();
   };
+
+  function timeStampToDay(x) {
+    const myDate = new Date(x * 1000);
+    return myDate;
+  }
+
+  function weiToEth(value) {
+    return ethers.utils.formatEther(value);
+  }
+
   useEffect(() => {
     if (render.current) {
       render.current = false;
@@ -37,9 +47,9 @@ const page = () => {
               From
             </th>
             <th className=" px-4 py-4 bg-blue-500 text-white font-bold">To</th>
-            <th className=" px-4 py-4 bg-blue-500 text-white font-bold">
+            {/* <th className=" px-4 py-4 bg-blue-500 text-white font-bold">
               Ethereum
-            </th>
+            </th> */}
             <th className=" px-4 py-4 bg-blue-500 text-white font-bold">
               Amount
             </th>
@@ -59,9 +69,11 @@ const page = () => {
                 <td className=" px-4 py-4">
                   {Array.from(el.to).splice(0, 6).join("") + "..."}
                 </td>
-                <td className=" px-4 pt-4">0.526</td>
-                <td className=" px-4 py-4">{el.value}</td>
-                <td className=" px-4 py-4">{transDate(el.timeStamp)}</td>
+                {/* <td className=" px-4 pt-4">0.526</td> */}
+                <td className=" px-4 py-4">{weiToEth(el.value) + "  eth"}</td>
+                <td className=" px-4 py-4">
+                  {timeStampToDay(el.timeStamp).toGMTString()}
+                </td>
               </tr>
             );
           })}

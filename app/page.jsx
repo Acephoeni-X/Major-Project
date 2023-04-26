@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className={styles.main}>
+      <main>
         <section className="text-gray-200 body-font">
           <div className="container px-5 py-12 mx-auto">
             <div className="xl:w-1/2 lg:w-3/4 w-full mx-auto text-center">
@@ -41,26 +41,24 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <a href="#team">
-            <div className="max-h-max text-red-50">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 15l-6 6m0 0l-6-6m6 6V9a6 6 0 0112 0v3"
-                />
-              </svg>
-            </div>
-          </a>
         </section>
       </main>
+      <span className="flex flex-wrap">
+        <button class="flex mx-auto my-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+          <a href="/assets/pdfs/" download={true}>
+            Download Report (*.pdf)
+          </a>
+        </button>
+        <button class="flex mx-auto my-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+          Download Report (*.zip)
+        </button>
+        <button class="flex mx-auto my-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+          Download Research Paper (*.pdf)
+        </button>
+        <button class="flex mx-auto my-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+          Download PPT(*.ppt)
+        </button>
+      </span>
       <Team />
     </>
   );

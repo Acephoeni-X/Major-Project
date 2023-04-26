@@ -18,7 +18,7 @@ const page = () => {
           await fetch(`http://localhost:3000/api/getTransHistory`, {
             method: "POST",
             body: JSON.stringify({
-              address: walletAdd,
+              address: window?.ethereum.selectedAddress,
             }),
           })
         ).json();
@@ -27,10 +27,6 @@ const page = () => {
       getTransaction();
     }
   }, []);
-
-  useEffect(() => {
-    console.log(transaction);
-  }, [transaction]);
 
   return (
     <div>

@@ -1,88 +1,88 @@
 "use client";
-import TransactionIcon from "@/app/dashboard/TransactionIcon";
 import SendEth from "@/app/dashboard/SendEth";
 import getBalance from "@/utils/getBalance";
 import { useRouter } from "next/navigation";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import QrCode from "@/utils/qrCode";
 import Image from "next/image";
-import { QResponse } from "../Context/QRRes";
-import truncateText from "@/utils/truncateText";
+import { ethers } from "ethers";
 import Chart from "./Chart";
 
-const Dashboard = (context) => {
+const Dashboard = () => {
   const [balance, setbalance] = useState();
   const [converted, setconverted] = useState();
   const [sendEther, setSendEther] = useState(false);
   const [genQR, setgenQR] = useState(false);
   const [miniTransaction, setminiTransaction] = useState();
+  const [walletAdd, setWalletAdd] = useState();
 
-  const { walletAdd, setWalletEth, setWalletAdd, scanner } =
-    useContext(QResponse);
+  // const { walletAdd, setWalletEth, setWalletAdd, scanner } =
+  //   useContext(QResponse);
   const router = useRouter();
   const renderOnce = useRef(true);
   const renderTwo = useRef(true);
+  const renderThree = useRef(true);
+  function weiToEth(value) {
+    return ethers.utils.formatEther(value);
+  }
+
+  function timeStampToDay(x) {
+    const myDate = new Date(x * 1000);
+    return myDate;
+  }
 
   useEffect(() => {
-    if (renderOnce.current) {
-      renderOnce.current = false;
+    if (renderTwo.current) {
+      renderTwo.current = false;
+      setWalletAdd(window.ethereum.selectedAddress);
+      async function bal() {
+        let balance = await getBalance(window.ethereum.selectedAddress);
+        setbalance(balance);
+      }
 
-      if (walletAdd == null) {
-        if (window.ethereum.selectedAddress == null) {
-          router.push("/");
-        } else {
-          setWalletAdd(window.ethereum.selectedAddress);
-          (async () => {
-            setbalance(await getBalance(window.ethereum.selectedAddress));
-          })();
-          fetch(`http://localhost:3000/api/getTransHistory`, {
+      async function getTransaction() {
+        let add = window?.ethereum?.selectedAddress;
+        let data = await (
+          await fetch(`http://localhost:3000/api/getTransHistory`, {
             method: "POST",
             body: JSON.stringify({
-              address: window.ethereum.selectedAddress,
+              address: add,
             }),
           })
-            .then((res) => res.json())
-            .then((res) => {
-              setminiTransaction(res);
-            });
-        }
-      } else {
-        async function getBal() {
-          let data = await getBalance(walletAdd);
-          if (data != undefined) {
-            setbalance(await getBalance(walletAdd));
-          } else {
-            router.replace("/login");
-          }
-        }
-        getBal();
+        ).json();
+        setminiTransaction(data);
+      }
+
+      bal();
+      if (window.ethereum.selectedAddress != null) {
+        getTransaction();
       }
     }
   }, []);
 
   useEffect(() => {
-    if (renderTwo.current || balance != undefined) {
-      renderTwo.current = false;
-      async function convert() {
+    if (renderThree.current) {
+      renderThree.current = false;
+      async function convert(balance) {
         let data = await (
-          await fetch(
-            `http://localhost:3000/api/eth-price?balance=${balance}`,
-            {
-              method: "POST",
-            }
-          )
+          await fetch(`http://localhost:3000/api/eth-price?balance=${0.2}`)
         ).json();
-        setWalletEth(data.price);
         setconverted(data.price);
       }
       convert();
     }
   }, [balance]);
 
+  // useEffect(() => {
+  //   if (window.ethereum.selectedAddress == null) {
+  //     router.push("/");
+  //   }
+  // });
+
   function shut() {
     setSendEther(false);
     setgenQR(false);
-    scanner.clear();
+    // scanner.clear();
   }
 
   return (
@@ -118,7 +118,7 @@ const Dashboard = (context) => {
                   <span>Home</span>
                 </div>
 
-                <div className=" flex flex-row items-center">
+                {/* <div className=" flex flex-row items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -128,7 +128,7 @@ const Dashboard = (context) => {
                     <path d="M11.983 1.907a.75.75 0 00-1.292-.657l-8.5 9.5A.75.75 0 002.75 12h6.572l-1.305 6.093a.75.75 0 001.292.657l8.5-9.5A.75.75 0 0017.25 8h-6.572l1.305-6.093z" />
                   </svg>
                   <span>Predictions</span>
-                </div>
+                </div> */}
 
                 <div className=" flex flex-row items-center">
                   <svg
@@ -255,7 +255,7 @@ const Dashboard = (context) => {
               <div className=" text-white text-2xl font-semibold">
                 <h2>Prediction</h2>
               </div>
-              <div>CharrrrtJSS</div>
+              {/* <div>CharrrrtJSS</div> */}
             </div>
           </div>
 
@@ -339,15 +339,64 @@ const Dashboard = (context) => {
                           key={index}
                         >
                           <div className=" bg-black flex justify-center items-center p-3 rounded-md">
-                            <TransactionIcon />
+                            {/* <TransactionIcon /> */}
+                            {e.from != window.ethereum.selectedAddress ? (
+                              <span>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke-width="1.5"
+                                  stroke="currentColor"
+                                  class="w-6 h-6"
+                                >
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                  />
+                                </svg>
+                              </span>
+                            ) : (
+                              <span>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke-width="1.5"
+                                  stroke="currentColor"
+                                  class="w-6 h-6"
+                                >
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                  />
+                                </svg>
+                              </span>
+                            )}
                           </div>
                           <div className=" h-full w-full flex flex-col justify-between text-white px-4 py-1">
                             <span className=" text-xs font-light">
-                              {e.timestamp}
+                              {timeStampToDay(e.timeStamp).toGMTString()}
                             </span>
                             <br />
                             <span className=" lg:mt-1 text-sm font-bold">
-                              {e.value}
+                              {weiToEth(e.value) + "  eth"}
+                            </span>
+                            <span className=" lg:mt-1 text-sm font-bold">
+                              {e.from != window.ethereum.selectedAddress
+                                ? "From: " +
+                                  e.from?.slice(0, 5) +
+                                  "..." +
+                                  e.from?.slice(
+                                    e.to?.length - 4,
+                                    e.from?.length
+                                  )
+                                : "To: " +
+                                  e.to?.slice(0, 5) +
+                                  "..." +
+                                  e.to?.slice(e.to?.length - 4, e.to?.length)}
                             </span>
                           </div>
                         </div>

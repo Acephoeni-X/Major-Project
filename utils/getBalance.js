@@ -4,7 +4,6 @@ const getBalance = async (account) => {
       method: "eth_getBalance",
       params: [`${account}`, "latest"],
     });
-    console.log(balance);
     if (balance === "0x0") {
       return 0;
     }

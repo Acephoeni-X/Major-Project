@@ -66,4 +66,4 @@ if __name__ == '__main__':
     dates = add_upcoming_dates()
     for idx, i in enumerate(pred):
         predictions.append({'date': dates[idx], 'price': i})
-    app.run(debug=True, port='8080')
+    app.run(debug=True, host='0.0.0.0', port=8080)

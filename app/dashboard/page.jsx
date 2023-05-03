@@ -43,7 +43,7 @@ const Dashboard = () => {
       async function getTransaction() {
         let add = window?.ethereum?.selectedAddress;
         let data = await (
-          await fetch(`http://localhost:3000/api/getTransHistory`, {
+          await fetch(`http://localhost/api/getTransHistory`, {
             method: "POST",
             body: JSON.stringify({
               address: add,
@@ -65,7 +65,7 @@ const Dashboard = () => {
       renderThree.current = false;
       async function convert(balance) {
         let data = await (
-          await fetch(`http://localhost:3000/api/eth-price?balance=${0.2}`)
+          await fetch(`http://localhost/api/eth-price?balance=${0.2}`)
         ).json();
         setconverted(data.price);
       }

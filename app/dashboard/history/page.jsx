@@ -25,7 +25,7 @@ const page = () => {
       render.current = false;
       async function getTransaction() {
         const trans = await (
-          await fetch(`http://localhost:3000/api/getTransHistory`, {
+          await fetch(`http://localhost/api/getTransHistory`, {
             method: "POST",
             body: JSON.stringify({
               address: window?.ethereum.selectedAddress,

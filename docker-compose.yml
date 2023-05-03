@@ -7,3 +7,11 @@ services:
     volumes:
       - /app/node_modules
       - ./:/app
+  nginx:
+    build: ./nginx/
+    ports:
+      - 80:80
+  predict:
+    build: ./prediction
+    ports:
+      - 8080:8080

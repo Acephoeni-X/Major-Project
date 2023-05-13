@@ -3,7 +3,7 @@ import LoginScreen from "./Connect";
 
 const Navbar = () => {
   return (
-    <div className="flex justify-between flex-wrap">
+    <div className="flex justify-between items-center flex-wrap shadow-2xl shadow-indigo-900">
       <header className="text-gray-600 body-font">
         <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
           <a className="flex title-font font-medium items-center text-gray-200 mb-4 md:mb-0">

@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link";
 import { useState, useEffect, useContext } from "react";
 import { QResponse } from "../Context/QRRes";
 
@@ -84,51 +85,43 @@ export default function RootLayout({ children }) {
               </div>
 
               <div className=" mt-10 mb-20 grid gap-4 px-6 text-white">
-                <div className=" flex flex-row items-center border border-black rounded p-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className=" mr-2 w-8 h-8"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <span>Home</span>
-                </div>
+                <Link href={"/dashboard"}>
+                  <div className=" flex flex-row items-center border border-black rounded p-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className=" mr-2 w-8 h-8"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <span>Home</span>
+                  </div>
+                </Link>
 
-                <div className=" flex flex-row items-center border border-black rounded p-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className=" mr-2 w-8 h-8"
-                  >
-                    <path d="M11.983 1.907a.75.75 0 00-1.292-.657l-8.5 9.5A.75.75 0 002.75 12h6.572l-1.305 6.093a.75.75 0 001.292.657l8.5-9.5A.75.75 0 0017.25 8h-6.572l1.305-6.093z" />
-                  </svg>
-                  <span>Predictions</span>
-                </div>
+                <Link href={"/dashboard/history"}>
+                  <div className=" flex flex-row items-center border border-black rounded p-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className=" mr-2 w-8 h-8"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M1 4a1 1 0 011-1h16a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4zm12 4a3 3 0 11-6 0 3 3 0 016 0zM4 9a1 1 0 100-2 1 1 0 000 2zm13-1a1 1 0 11-2 0 1 1 0 012 0zM1.75 14.5a.75.75 0 000 1.5c4.417 0 8.693.603 12.749 1.73 1.111.309 2.251-.512 2.251-1.696v-.784a.75.75 0 00-1.5 0v.784a.272.272 0 01-.35.25A49.043 49.043 0 001.75 14.5z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <span>Transactions</span>
+                  </div>
+                </Link>
 
-                <div className=" flex flex-row items-center border border-black rounded p-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className=" mr-2 w-8 h-8"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M1 4a1 1 0 011-1h16a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4zm12 4a3 3 0 11-6 0 3 3 0 016 0zM4 9a1 1 0 100-2 1 1 0 000 2zm13-1a1 1 0 11-2 0 1 1 0 012 0zM1.75 14.5a.75.75 0 000 1.5c4.417 0 8.693.603 12.749 1.73 1.111.309 2.251-.512 2.251-1.696v-.784a.75.75 0 00-1.5 0v.784a.272.272 0 01-.35.25A49.043 49.043 0 001.75 14.5z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <span>Transactions</span>
-                </div>
-
-                <div className=" flex flex-row items-center border border-black rounded p-2">
+                {/* <div className=" flex flex-row items-center border border-black rounded p-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -138,7 +131,7 @@ export default function RootLayout({ children }) {
                     <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
                   </svg>
                   <span>Profile</span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

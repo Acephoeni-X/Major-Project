@@ -283,7 +283,7 @@ const Dashboard = () => {
                       <div className=" text-2xl font-bold">
                         <h1>{Number(balance).toFixed(2)} Eth.</h1>
                       </div>
-                      <div className=" flex text-sm">
+                      {/* <div className=" flex text-sm">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 20 20"
@@ -297,7 +297,7 @@ const Dashboard = () => {
                           />
                         </svg>
                         <span> 11.57%</span>
-                      </div>
+                      </div> */}
                     </div>
                     <div>
                       <div>

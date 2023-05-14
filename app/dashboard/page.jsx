@@ -7,6 +7,7 @@ import QrCode from "@/utils/qrCode";
 import Image from "next/image";
 import { ethers } from "ethers";
 import Chart from "./Chart";
+import Link from "next/link";
 
 const Dashboard = () => {
   const [balance, setbalance] = useState();
@@ -43,7 +44,7 @@ const Dashboard = () => {
       async function getTransaction() {
         let add = window?.ethereum?.selectedAddress;
         let data = await (
-          await fetch(`http://localhost/api/getTransHistory`, {
+          await fetch(`http://localhost:3840/api/getTransHistory`, {
             method: "POST",
             body: JSON.stringify({
               address: add,
@@ -65,7 +66,7 @@ const Dashboard = () => {
       renderThree.current = false;
       async function convert(balance) {
         let data = await (
-          await fetch(`http://localhost/api/eth-price?balance=${0.2}`)
+          await fetch(`http://localhost:3840/api/eth-price?balance=${0.2}`)
         ).json();
         setconverted(data.price);
       }
@@ -102,21 +103,23 @@ const Dashboard = () => {
             {/* Option Hidden for small i.e < lg */}
             <div>
               <div className=" text-white hidden  lg:grid lg:gap-4">
-                <div className=" flex flex-row items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className=" mr-2 w-5 h-5"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <span>Home</span>
-                </div>
+                <Link href={"/dashboard"}>
+                  <div className=" flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className=" mr-2 w-5 h-5"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <span>Home</span>
+                  </div>
+                </Link>
 
                 {/* <div className=" flex flex-row items-center">
                   <svg
@@ -130,32 +133,34 @@ const Dashboard = () => {
                   <span>Predictions</span>
                 </div> */}
 
-                <div className=" flex flex-row items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className=" mr-2 w-5 h-5"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M1 4a1 1 0 011-1h16a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4zm12 4a3 3 0 11-6 0 3 3 0 016 0zM4 9a1 1 0 100-2 1 1 0 000 2zm13-1a1 1 0 11-2 0 1 1 0 012 0zM1.75 14.5a.75.75 0 000 1.5c4.417 0 8.693.603 12.749 1.73 1.111.309 2.251-.512 2.251-1.696v-.784a.75.75 0 00-1.5 0v.784a.272.272 0 01-.35.25A49.043 49.043 0 001.75 14.5z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <span>Transactions</span>
-                </div>
+                <Link href={"/dashboard/history"}>
+                  <div className=" flex flex-row items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className=" mr-2 w-5 h-5"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M1 4a1 1 0 011-1h16a1 1 0 011 1v8a1 1 0 01-1 1H2a1 1 0 01-1-1V4zm12 4a3 3 0 11-6 0 3 3 0 016 0zM4 9a1 1 0 100-2 1 1 0 000 2zm13-1a1 1 0 11-2 0 1 1 0 012 0zM1.75 14.5a.75.75 0 000 1.5c4.417 0 8.693.603 12.749 1.73 1.111.309 2.251-.512 2.251-1.696v-.784a.75.75 0 00-1.5 0v.784a.272.272 0 01-.35.25A49.043 49.043 0 001.75 14.5z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <span>Transactions</span>
+                  </div>
+                </Link>
 
-                <div className=" flex flex-row items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className=" mr-2 w-5 h-5"
-                  >
-                    <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
-                  </svg>
-                  <span>Profile</span>
+                <div className=" flex flex-row items-center cursor-pointer" onClick={() => setgenQR(true)}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className=" mr-2 w-5 h-5"
+                    >
+                      <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
+                    </svg>
+                    <span>Profile</span>
                 </div>
               </div>
             </div>
@@ -173,17 +178,19 @@ const Dashboard = () => {
                   />
                 </div>
                 <div className=" mt-1 mb-4 w-fit">
-                  <h3 className=" font-semibold text-white">
-                    {walletAdd?.slice(0, 5) +
-                      "..." +
-                      walletAdd?.slice(
-                        walletAdd?.length - 4,
-                        walletAdd?.length
-                      )}
-                  </h3>
+                  {(walletAdd)?
+                    <h3 className=" font-semibold text-white">
+                      {walletAdd?.slice(0, 5) +
+                        "..." +
+                        walletAdd?.slice(
+                          walletAdd?.length - 4,
+                          walletAdd?.length
+                        )}
+                    </h3>
+                  :<></>}
                 </div>
-                <div className=" bg-black px-3 py-1 rounded-lg">
-                  <button className=" text-sm text-white">Profile</button>
+                <div className=" bg-black rounded-lg">
+                  <button onClick={() => setgenQR(true)} className=" text-sm bg-indigo-500 px-3 py-1 rounded-md text-white">Profile</button>
                 </div>
               </div>
             </div>
@@ -197,7 +204,7 @@ const Dashboard = () => {
               </div>
               <div className=" w-full flex justify-start">
                 <button
-                  className=" bg-blue-700 hover:shadow hover:shadow-blue-500 hover:bg-gradient-to-r from-blue-700 via-blue-500 to-blue-400 text-white lg:text-white px-3 py-1 rounded-md mr-16 flex flex-col lg:flex-row items-center"
+                  className=" bg-indigo-700 hover:shadow hover:shadow-indigo-500 hover:bg-gradient-to-r from-indigo-700 via-indigo-500 to-indigo-400 text-white lg:text-white px-3 py-1 rounded-md mr-16 flex flex-col lg:flex-row items-center"
                   onClick={() => setSendEther(true)}
                 >
                   <svg
@@ -214,7 +221,7 @@ const Dashboard = () => {
                   </span>
                 </button>
                 <button
-                  className=" bg-blue-700 hover:shadow hover:shadow-blue-500 hover:bg-gradient-to-r from-blue-700 via-blue-500 to-blue-400 text-white lg:text-white px-3 py-1 rounded-md lg:mr-16 flex flex-col lg:flex-row items-center"
+                  className=" bg-indigo-700 hover:shadow hover:shadow-indigo-500 hover:bg-gradient-to-r from-indigo-700 via-indigo-500 to-indigo-400 text-white lg:text-white px-3 py-1 rounded-md lg:mr-16 flex flex-col lg:flex-row items-center"
                   onClick={() => setgenQR(true)}
                 >
                   <svg
@@ -267,7 +274,7 @@ const Dashboard = () => {
                 <div className="text-white text-lg lg:text-2xl font-bold">
                   <h2>Summary</h2>
                 </div>
-                <div className=" text-white border border-black bg-black shadow-2xl shadow-blue-600 rounded-md p-5 mt-8">
+                <div className=" text-white border border-black bg-black shadow-2xl shadow-indigo-600 rounded-md p-5 mt-8">
                   <div>
                     <div className="">
                       <span>Your Wallet</span>
@@ -333,9 +340,9 @@ const Dashboard = () => {
                 <div className=" ">
                   <div className=" rounded-md overflow-hidden my-8 p-4">
                     {miniTransaction &&
-                      miniTransaction.data.slice(0, 5).map((e, index) => (
+                      miniTransaction.data.slice(0, 2).map((e, index) => (
                         <div
-                          className=" flex items-center mb-3 border border-blue-300 rounded-md shadow-md shadow-blue-500"
+                          className=" flex items-center mb-3 border border-indigo-300 rounded-md shadow-md shadow-indigo-500"
                           key={index}
                         >
                           <div className=" bg-black flex justify-center items-center p-3 rounded-md">
@@ -346,13 +353,13 @@ const Dashboard = () => {
                                   xmlns="http://www.w3.org/2000/svg"
                                   fill="none"
                                   viewBox="0 0 24 24"
-                                  stroke-width="1.5"
+                                  strokeWidth="1.5"
                                   stroke="currentColor"
-                                  class="w-6 h-6"
+                                  className="w-6 h-6"
                                 >
                                   <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
                                     d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                                   />
                                 </svg>
@@ -363,13 +370,13 @@ const Dashboard = () => {
                                   xmlns="http://www.w3.org/2000/svg"
                                   fill="none"
                                   viewBox="0 0 24 24"
-                                  stroke-width="1.5"
+                                  strokeWidth="1.5"
                                   stroke="currentColor"
-                                  class="w-6 h-6"
+                                  className="w-6 h-6"
                                 >
                                   <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
                                     d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                                   />
                                 </svg>
@@ -415,7 +422,7 @@ const Dashboard = () => {
           onClick={() => shut()}
         >
           <div
-            className="shadow-2xl shadow-blue-700"
+            className="shadow-2xl shadow-indigo-700"
             onClick={(event) => event.stopPropagation()}
           >
             <SendEth />

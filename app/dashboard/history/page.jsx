@@ -26,14 +26,20 @@ const page = () => {
     if (render.current) {
       render.current = false;
       async function getTransaction() {
-        const trans = await (
-          await fetch(`http://localhost:3840/api/getTransHistory`, {
-            method: "POST",
-            body: JSON.stringify({
-              address: window?.ethereum.selectedAddress,
-            }),
-          })
+        // const trans = await (
+        //   await fetch(`http://localhost:3000/api/getTransHistory`, {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //       address: window?.ethereum.selectedAddress,
+        //     }),
+        //   })
+        // ).json();
+        let trans = await (
+          await fetch(
+            `https://api-goerli.etherscan.io/api?module=account&action=txlist&address=${window.ethereum.selectedAddress}&startblock=0&endblock=99999999&offset=10&sort=asc&apikey=VJGHHZAPIQJCBP757YE4P5DWFQPA88UKSC`
+          )
         ).json();
+        trans = trans["result"].reverse();
         settransaction(trans);
       }
       getTransaction();
@@ -41,18 +47,29 @@ const page = () => {
   }, []);
 
   return (
-
     <div className=" p-10 sm:p-20">
       <div className=" containe mx-auto px-5 lg:px-10 mb-6">
-        <button onClick={()=>router.back()} className=" bg-indigo-500 px-2 py-1 rounded-lg text-center flex justify-center items-center mb-8 text-xl">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        <button
+          onClick={() => router.back()}
+          className=" bg-indigo-500 px-2 py-1 rounded-lg text-center flex justify-center items-center mb-8 text-xl"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-5 h-5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5L8.25 12l7.5-7.5"
+            />
           </svg>
           Back
         </button>
-        <h1 className=" text-3xl">
-          Transaction History
-        </h1>
+        <h1 className=" text-3xl">Transaction History</h1>
       </div>
       <div className=" containe mx-auto px-5 lg:px-10">
         <div className=" rounded-md overflow-x-scroll">
@@ -62,7 +79,9 @@ const page = () => {
                 <th className=" px-4 py-4 bg-indigo-500 text-white font-bold">
                   From
                 </th>
-                <th className=" px-4 py-4 bg-indigo-500 text-white font-bold">To</th>
+                <th className=" px-4 py-4 bg-indigo-500 text-white font-bold">
+                  To
+                </th>
                 {/* <th className=" px-4 py-4 bg-indigo-500 text-white font-bold">
                   Ethereum
                 </th> */}
@@ -73,7 +92,7 @@ const page = () => {
                   Timestemp
                 </th>
               </tr>
-              {transaction?.data.map((el, index) => {
+              {transaction?.map((el, index) => {
                 return (
                   <tr
                     key={index}
@@ -86,7 +105,9 @@ const page = () => {
                       {Array.from(el.to).splice(0, 6).join("") + "..."}
                     </td>
                     {/* <td className=" px-4 pt-4">0.526</td> */}
-                    <td className=" px-4 py-4">{weiToEth(el.value) + "  eth"}</td>
+                    <td className=" px-4 py-4">
+                      {weiToEth(el.value) + "  eth"}
+                    </td>
                     <td className=" px-4 py-4">
                       {timeStampToDay(el.timeStamp).toGMTString()}
                     </td>

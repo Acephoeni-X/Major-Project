@@ -6,7 +6,6 @@ export default async function getTransHistory(req, res) {
         `https://api-goerli.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&offset=10&sort=asc&apikey=VJGHHZAPIQJCBP757YE4P5DWFQPA88UKSC`
       )
     ).json();
-    // console.log(data);
     res.status(200).json({ data: data["result"].reverse() });
   } else {
     res.send(400);

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "./page.module.css";
@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   const [toggleDrop, setToggleDrop] = useState(false);
   const handleDownloadPDF = () => {
-    window.open(`/pdfs/lovepdfile.pdf`, '_blank');
+    window.open(`/pdfs/Report.pdf`);
   };
   return (
     <>
@@ -44,17 +44,18 @@ export default function Home() {
                 <p className="leading-relaxed text-base text-white">
                   The Ethereum management dashboard provides a user-friendly way
                   to manage transactions and assets, including transfer
-                  functionality, current balance display, transaction history, QR
-                  code functionality and prediction column for price of ether. The
-                  project is designed to make Ethereum transactions more efficient
-                  and user-friendly by providing an easy-to-use interface.
+                  functionality, current balance display, transaction history,
+                  QR code functionality and prediction column for price of
+                  ether. The project is designed to make Ethereum transactions
+                  more efficient and user-friendly by providing an easy-to-use
+                  interface.
                 </p>
               </div>
             </div>
           </div>
         </section>
       </main>
-      
+
       <div className="bg-gray-900 py-10 flex justify-center items-center z-0">
         <div className="container px-5 mx-auto flex justify-between items-center w-full relative">
           <div className="text-xl">Download Project Report Files</div>
@@ -92,31 +93,18 @@ export default function Home() {
                   className="py-2 text-sm text-gray-700 dark:text-gray-200"
                   aria-labelledby="dropdownDefaultButton"
                 >
-                  <li className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" onClick={()=>handleDownloadPDF()}>
-                      lovepdfile
+                  <li
+                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    onClick={() => handleDownloadPDF()}
+                  >
+                    Report Paper
                   </li>
                   <li>
                     <a
-                      href={`#`}
+                      href={`/pdfs/Research_Paper.pdf`}
                       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
-                      Settings
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >
-                      Earnings
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >
-                      Sign out
+                      Research Paper
                     </a>
                   </li>
                 </ul>
@@ -125,7 +113,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
 
       {/* <span className="flex flex-wrap">
         <button className="flex mx-auto my-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">

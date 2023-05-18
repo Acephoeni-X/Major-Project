@@ -43,14 +43,20 @@ const Dashboard = () => {
 
       async function getTransaction() {
         let add = window?.ethereum?.selectedAddress;
+        // let data = await (
+        //   await fetch(`http://localhost:3000/api/getTransHistory`, {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //       address: add,
+        //     }),
+        //   })
+        // ).json();
         let data = await (
-          await fetch(`http://localhost:3840/api/getTransHistory`, {
-            method: "POST",
-            body: JSON.stringify({
-              address: add,
-            }),
-          })
+          await fetch(
+            `https://api-goerli.etherscan.io/api?module=account&action=txlist&address=${window.ethereum.selectedAddress}&startblock=0&endblock=99999999&offset=10&sort=asc&apikey=VJGHHZAPIQJCBP757YE4P5DWFQPA88UKSC`
+          )
         ).json();
+        data = data["result"].reverse();
         setminiTransaction(data);
       }
 
@@ -65,11 +71,19 @@ const Dashboard = () => {
     if (renderThree.current) {
       renderThree.current = false;
       async function convert(balance) {
+        // let data = await (
+        //   await fetch(`http://localhost:3000/api/eth-price?balance=${balance}`)
+        // ).json();
         let data = await (
-          await fetch(`http://localhost:3840/api/eth-price?balance=${0.2}`)
+          await fetch(
+            "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=INR"
+          )
         ).json();
-        setconverted(data.price);
+        balance = parseFloat(balance);
+        let inr = parseFloat(data.INR);
+        setconverted(inr);
       }
+
       convert();
     }
   }, [balance]);
@@ -151,16 +165,19 @@ const Dashboard = () => {
                   </div>
                 </Link>
 
-                <div className=" flex flex-row items-center cursor-pointer" onClick={() => setgenQR(true)}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className=" mr-2 w-5 h-5"
-                    >
-                      <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
-                    </svg>
-                    <span>Profile</span>
+                <div
+                  className=" flex flex-row items-center cursor-pointer"
+                  onClick={() => setgenQR(true)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className=" mr-2 w-5 h-5"
+                  >
+                    <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
+                  </svg>
+                  <span>Profile</span>
                 </div>
               </div>
             </div>
@@ -178,7 +195,7 @@ const Dashboard = () => {
                   />
                 </div>
                 <div className=" mt-1 mb-4 w-fit">
-                  {(walletAdd)?
+                  {walletAdd ? (
                     <h3 className=" font-semibold text-white">
                       {walletAdd?.slice(0, 5) +
                         "..." +
@@ -187,10 +204,17 @@ const Dashboard = () => {
                           walletAdd?.length
                         )}
                     </h3>
-                  :<></>}
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div className=" bg-black rounded-lg">
-                  <button onClick={() => setgenQR(true)} className=" text-sm bg-indigo-500 px-3 py-1 rounded-md text-white">Profile</button>
+                  <button
+                    onClick={() => setgenQR(true)}
+                    className=" text-sm bg-indigo-500 px-3 py-1 rounded-md text-white"
+                  >
+                    Profile
+                  </button>
                 </div>
               </div>
             </div>
@@ -340,13 +364,12 @@ const Dashboard = () => {
                 <div className=" ">
                   <div className=" rounded-md overflow-hidden my-8 p-4">
                     {miniTransaction &&
-                      miniTransaction.data.slice(0, 2).map((e, index) => (
+                      miniTransaction.slice(0, 5).map((e, index) => (
                         <div
                           className=" flex items-center mb-3 border border-indigo-300 rounded-md shadow-md shadow-indigo-500"
                           key={index}
                         >
                           <div className=" bg-black flex justify-center items-center p-3 rounded-md">
-                            {/* <TransactionIcon /> */}
                             {e.from != window.ethereum.selectedAddress ? (
                               <span>
                                 <svg

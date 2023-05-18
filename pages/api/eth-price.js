@@ -10,9 +10,6 @@ export default async function handler(req, res) {
   ).json();
   balance = parseFloat(balance);
   let inr = parseFloat(data.INR);
-  // let ok = JSON.stringify(req);
-  // console.log(balance);
-  // res.status(200).json({ price: ok });
 
   res.status(200).json({ price: balance * inr });
 }
